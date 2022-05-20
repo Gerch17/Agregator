@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.gerch</groupId>
+    <artifactId>liquibase-migrations</artifactId>
+    <version>0.0.1</version>
+    <name>liquibase-migrations</name>
+
+    <properties>
+        <postgresql.version>42.3.5</postgresql.version>
+        <liquibase.version>4.10.0</liquibase.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>postgres</id>
+            <properties>
+                <liquibase.driver>org.postgresql.Driver</liquibase.driver>
+            </properties>
+        </profile>
+        <profile>
+            <id>clearCheckSums</id>
+            <properties>
+                <liquibase.clearCheckSums>true</liquibase.clearCheckSums>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>
+                    <changeLogFile>changelog.xml</changeLogFile>
+                    <databaseChangeLogTableName>liquibase_agregator_changelog</databaseChangeLogTableName>
+                    <databaseChangeLogLockTableName>liquibase_agregator_changelog_loc</databaseChangeLogLockTableName>
+                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
