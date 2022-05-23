@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import ru.gerch.agregator.dto.ProductDto;
-import ru.gerch.agregator.dto.RequestDto;
 import ru.gerch.agregator.entity.Product;
 import ru.gerch.agregator.entity.Request;
 import ru.gerch.agregator.enums.EnumStatus;
@@ -19,7 +18,7 @@ import java.util.UUID;
         componentModel = "spring",
         injectionStrategy = InjectionStrategy.FIELD,
         uses = {UserService.class},
-        imports = {UUID.class, Set.class, EnumStatus.class}
+        imports = {UUID.class, Set.class, EnumStatus.class, Boolean.class}
 )
 public abstract class ProductMapper {
 
@@ -27,6 +26,7 @@ public abstract class ProductMapper {
 
     @Mapping(target = "id", expression = "java(UUID.randomUUID())")
     @Mapping(target = "img", ignore = true)
+    @Mapping(target = "sold", expression = "java(false)")
     public abstract Product fromRequest(Request request);
 
     @InheritInverseConfiguration
