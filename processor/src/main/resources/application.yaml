@@ -29,6 +29,10 @@ spring:
           auto: validate
   mandatory-file-encoding: utf-8
 
+  liquibase:
+    enabled: false
+    change-log: 'classpath:liquibase/changelog-master.yml'
+
 logging:
   level:
     root: warn
