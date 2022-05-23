@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.gerch.agregator.dto.RequestDto;
 import ru.gerch.agregator.entity.Request;
 import ru.gerch.agregator.entity.User;
@@ -21,9 +23,12 @@ import java.util.UUID;
 public class RequestService {
     private final RequestRepository requestRepository;
     private final UserService userService;
+    private final AuthService authService;
+    private final ProductService productService;
 
     public void createRequest(RequestDto requestDto) {
-        Request request = RequestMapper.INSTANCE.create(requestDto, userService);
+        Request request = RequestMapper.INSTANCE.create(requestDto);
+        request.setUser(userService.getByLogin(authService.getAuthInfo().getUsername()).get());
         requestRepository.save(request);
     }
 
@@ -45,12 +50,20 @@ public class RequestService {
         throw new AuthException("Cannot find user " + userName);
     }
 
-    public void updateRequestStatus(UUID id, EnumStatus status) {
+    @Transactional
+    public ResponseEntity<String> updateRequestStatus(UUID id, EnumStatus status) {
         Optional<Request> request = requestRepository.findById(id);
         if (request.isPresent()) {
             Request newRequest = request.get();
-            newRequest.setStatus(status);
-            requestRepository.save(newRequest);
+            if (newRequest.getStatus().equals(EnumStatus.REVIEW)) {
+                newRequest.setStatus(status);
+                requestRepository.save(newRequest);
+                if (newRequest.getStatus().equals(EnumStatus.APPROVED)) {
+                    productService.createProductFromRequest(newRequest);
+                }
+                return ResponseEntity.ok("Status has been changed");
+            }
+            return ResponseEntity.ok("You cant change status on this request");
         }
         throw new RuntimeException("No such request");
     }

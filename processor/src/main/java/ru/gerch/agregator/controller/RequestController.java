@@ -2,16 +2,13 @@ package ru.gerch.agregator.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.gerch.agregator.dto.ChangeStatusDto;
 import ru.gerch.agregator.dto.PageInfo;
 import ru.gerch.agregator.dto.PageResponse;
 import ru.gerch.agregator.dto.RequestDto;
-import ru.gerch.agregator.enums.EnumStatus;
 import ru.gerch.agregator.mapper.RequestMapper;
 import ru.gerch.agregator.service.AuthService;
 import ru.gerch.agregator.service.RequestService;
@@ -19,7 +16,6 @@ import ru.gerch.agregator.service.RequestService;
 import javax.security.auth.message.AuthException;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,6 +28,12 @@ public class RequestController {
     private final RequestMapper requestMapper;
 
     private final AuthService authService;
+
+    @PostMapping("status/change")
+    @PreAuthorize("@authService.authInfo.hasRole('ADMIN')")
+    public ResponseEntity<String> changeStatus(@RequestBody ChangeStatusDto statusDto) {
+        return requestService.updateRequestStatus(statusDto.getId(), statusDto.getStatus());
+    }
 
     @PostMapping("create")
     @PreAuthorize("@authService.authInfo.hasRole('PROVIDER')")
@@ -48,7 +50,7 @@ public class RequestController {
     ) {
         var result = requestService.findAllByPageable(pageNum, pageSize)
                 .stream()
-                .map(requestMapper::toDto).toList();
+                .map(requestMapper::toDto).collect(Collectors.toList());
 
         return ResponseEntity.ok(new PageResponse<>(
                 result,
@@ -64,7 +66,7 @@ public class RequestController {
 
         var result = requestService.findByUserName(pageNum, pageSize, authService.getAuthInfo().getName())
                 .stream()
-                .map(requestMapper::toDto).toList();
+                .map(requestMapper::toDto).collect(Collectors.toList());
 
         return ResponseEntity.ok(new PageResponse<>(
                 result,
