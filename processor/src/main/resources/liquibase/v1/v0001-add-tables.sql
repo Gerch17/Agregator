@@ -1,12 +1,11 @@
 create table "users"
 (
-    "id"        uuid,
+    "id"        uuid primary key,
     "user_name" varchar(40)  not null,
     "email"     varchar(40)  not null,
     "password"  varchar(200) not null,
     unique ("user_name"),
-    unique ("email"),
-    primary key ("id")
+    unique ("email")
 );
 
 create table "role"
@@ -44,6 +43,7 @@ create table "product"
     "description" varchar(200),
     "img"         varchar(100),
     "price"       int         not null,
+    "is_sold"     bool        not null,
     primary key ("id")
 );
 
@@ -68,3 +68,7 @@ values ('e37b5e5c-7133-45b7-8461-c4f6006d0477',
         'admin',
         'adminadmin@admin.ru',
         '$2a$08$QVptKb9N3qjnUnCPkaUTXOD5ADlArYlVO6TiMH3XNxkf87sUygQvG');
+
+insert into users_roles(user_id, role_id)
+values ('e37b5e5c-7133-45b7-8461-c4f6006d0477',
+        '123e4567-e89b-12d3-a456-426655440000');

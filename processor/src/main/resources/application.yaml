@@ -14,7 +14,11 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/agregator
+    url: jdbc:postgresql://localhost:5432/postgres
+    hikari:
+      maximum-pool-size: 6
+      minimum-idle: 2
+      connection-timeout: 10000
   application:
     name: Agregator
 
@@ -30,7 +34,7 @@ spring:
   mandatory-file-encoding: utf-8
 
   liquibase:
-    enabled: false
+    enabled: true
     change-log: 'classpath:liquibase/changelog-master.yml'
 
 logging:

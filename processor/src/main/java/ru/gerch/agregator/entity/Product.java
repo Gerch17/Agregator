@@ -32,4 +32,7 @@ public class Product {
     @Column(name = "price")
     private int price;
 
+    @Column(name = "is_sold")
+    private boolean sold;
+
 }

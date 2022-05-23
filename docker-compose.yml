@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  database:
+    image: postgres
+    hostname: database
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+
+  processor:
+    build: ./processor
+    hostname: processor
+    links:
+      - database
+    ports:
+      - "8080:8080"

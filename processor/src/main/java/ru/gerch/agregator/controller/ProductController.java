@@ -1,20 +1,21 @@
 package ru.gerch.agregator.controller;
 
+import com.sun.net.httpserver.Authenticator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import ru.gerch.agregator.dto.PageInfo;
 import ru.gerch.agregator.dto.PageResponse;
 import ru.gerch.agregator.dto.ProductDto;
 import ru.gerch.agregator.enums.SortEnum;
 import ru.gerch.agregator.mapper.ProductMapper;
+import ru.gerch.agregator.service.AuthService;
 import ru.gerch.agregator.service.ProductService;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
+    private final AuthService authService;
 
     @GetMapping("/")
     public ResponseEntity<PageResponse<ProductDto>> getAllProducts(
@@ -38,6 +40,13 @@ public class ProductController {
         return ResponseEntity.ok(new PageResponse<>(
                 result,
                 new PageInfo(productService.count(), pageNum, pageSize, result.size())));
+    }
+
+    @PostMapping("/order/{id}")
+    @PreAuthorize("@authService.authInfo.authenticated")
+    public ResponseEntity<String> orderProduct(@PathVariable UUID id) {
+        productService.orderProduct(id);
+        return ResponseEntity.ok("Success");
     }
 
 }
