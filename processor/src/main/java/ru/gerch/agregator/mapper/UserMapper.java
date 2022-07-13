@@ -1,12 +1,8 @@
 package ru.gerch.agregator.mapper;
 
-import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.bcel.BcelAccessForInlineMunger;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.gerch.agregator.dto.UserDto;
 import ru.gerch.agregator.entity.Role;
 import ru.gerch.agregator.entity.User;
@@ -37,7 +33,7 @@ public abstract class UserMapper {
 
     @InheritInverseConfiguration
     @Mapping(target = "password", ignore = true)
-    public abstract UserDto UserToUserDto(User user);
+    public abstract UserDto userToUserDto(User user);
 
 
 }

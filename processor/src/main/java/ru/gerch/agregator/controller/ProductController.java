@@ -1,6 +1,5 @@
 package ru.gerch.agregator.controller;
 
-import com.sun.net.httpserver.Authenticator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,7 +9,6 @@ import ru.gerch.agregator.dto.PageResponse;
 import ru.gerch.agregator.dto.ProductDto;
 import ru.gerch.agregator.enums.SortEnum;
 import ru.gerch.agregator.mapper.ProductMapper;
-import ru.gerch.agregator.service.AuthService;
 import ru.gerch.agregator.service.ProductService;
 
 import javax.validation.constraints.Max;
@@ -24,7 +22,6 @@ import java.util.stream.Collectors;
 public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
-    private final AuthService authService;
 
     @GetMapping("/")
     public ResponseEntity<PageResponse<ProductDto>> getAllProducts(

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 public class UserDto {
 
-    private UUID uuid;
+    private UUID id;
     private String userName;
     private String password;
 

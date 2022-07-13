@@ -26,7 +26,6 @@ public class RequestController {
 
     private final RequestService requestService;
     private final RequestMapper requestMapper;
-
     private final AuthService authService;
 
     @PostMapping("status/change")
