@@ -20,8 +20,7 @@ public class PageInfo {
         this.totalValues = totalValues;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
-        this.currentSize = currentSize;
-        this.totalPages = totalValues / pageNumber;
+        this.totalPages = totalValues / pageSize;
         if (totalValues % pageSize != 0) {
             this.totalPages += 1;
         }

@@ -45,7 +45,6 @@ public class AuthController {
         if (userService.getByLogin(userDto.getUserName()).isPresent()) {
             throw new AuthException("User " + userDto.getUserName() + "already exists");
         }
-
         userService.register(userDto);
         return ResponseEntity.ok(authService.login(new JwtRequest(userDto.getUserName(), userDto.getPassword())));
     }

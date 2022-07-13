@@ -21,7 +21,8 @@ public class PageResponse<T> {
         }
         this.value.add(value);
         if (pageInfo != null) {
-            pageInfo = new PageInfo(pageInfo.getTotalValues() + 1,
+            pageInfo = new PageInfo(
+                    pageInfo.getTotalValues() + 1,
                     pageInfo.getPageNumber(),
                     Math.max(this.value.size(), pageInfo.getPageSize()),
                     this.value.size());

@@ -1,13 +1,13 @@
 package ru.gerch.agregator.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.gerch.agregator.dto.RequestDto;
 import ru.gerch.agregator.entity.Request;
-import ru.gerch.agregator.entity.User;
 import ru.gerch.agregator.enums.EnumStatus;
-import ru.gerch.agregator.service.RoleService;
 import ru.gerch.agregator.service.UserService;
 
 import java.util.Set;
