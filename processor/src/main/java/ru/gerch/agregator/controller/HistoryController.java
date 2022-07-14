@@ -38,8 +38,6 @@ public class HistoryController {
                 .map(historyMapper::toDto)
                 .collect(Collectors.toList());
 
-
-
         return ResponseEntity.ok(new PageResponse<>(
                 result,
                 new PageInfo(historyService.count(), pageNum, pageSize, result.size())));
