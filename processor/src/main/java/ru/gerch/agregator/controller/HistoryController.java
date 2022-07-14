@@ -24,7 +24,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class HistoryController {
     private final HistoryService historyService;
+
     private final HistoryMapper historyMapper;
+
     private final AuthService authService;
 
     @GetMapping("/")
