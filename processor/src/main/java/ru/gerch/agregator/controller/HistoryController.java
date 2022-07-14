@@ -32,8 +32,7 @@ public class HistoryController {
     public ResponseEntity<PageResponse<HistoryDto>> getHistory(
             @RequestParam(defaultValue = "1") @Min(1) int pageNum,
             @RequestParam(defaultValue = "10") @Min(1) @Max(250) int pageSize,
-            @RequestParam(required = false) SortEnum sort
-    ) {
+            @RequestParam(required = false) SortEnum sort) {
         var result = historyService.findAllByPageable(pageNum, pageSize, sort)
                 .stream()
                 .map(historyMapper::toDto)
