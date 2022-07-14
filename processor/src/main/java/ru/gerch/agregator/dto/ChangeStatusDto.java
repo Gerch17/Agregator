@@ -7,6 +7,10 @@ import java.util.UUID;
 
 @Data
 public class ChangeStatusDto {
+
+
+
+
    private UUID id;
    private EnumStatus status;
 }
