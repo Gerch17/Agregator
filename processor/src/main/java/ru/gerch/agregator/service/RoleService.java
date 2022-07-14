@@ -11,6 +11,7 @@ public class RoleService {
     private final RoleRepository roleRepository;
 
     public Role findRoleByName(String name) {
+        //Remove later
         return roleRepository.findRoleByRoleName(name);
     }
 }
