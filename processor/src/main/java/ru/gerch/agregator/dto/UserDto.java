@@ -1,6 +1,7 @@
 package ru.gerch.agregator.dto;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.util.UUID;
 

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 import ru.gerch.agregator.entity.Request;
 import ru.gerch.agregator.entity.User;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface RequestRepository extends JpaRepository<Request, UUID> {
     Page<Request> findRequestsByUser(User user, Pageable pageable);
+
 }

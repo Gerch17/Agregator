@@ -1,9 +1,12 @@
 package ru.gerch.agregator.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.gerch.agregator.dto.UserDto;
 import ru.gerch.agregator.security.jwt.JwtRequest;
 import ru.gerch.agregator.security.jwt.JwtResponse;
